@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>
+            Home Page
+        </title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+        <script src="https://cdnjs.buttercms.com/buttercms-1.2.1.min.js"></script>
+        <style>
+          body {
+            padding: 0;
+            margin: 0;
+            font-family: 'Helvetica';
+          }
+          header {
+            border-bottom: 1px solid #ddd;
+          }
+          header img {
+            margin: 0 auto;
+            display: block;
+            width: 360px;
+          }
+          h1 {
+            text-align: center;
+          }
+          button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 35px auto;
+            display: block;
+          }
+          #content {
+            padding: 15px 80px 15px 80px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+          }
+          .action {
+            margin-bottom: 45px;
+          }
+          footer {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            display: block;
+            text-align: center;
+            background: #494949;
+          }
+          footer img {
+            display: inline-block;
+            width: 90px;
+            margin: 0 auto;
+            padding-right: 15px;
+          }
+        </style>
+    </head>
+    <body>
+         <div id="app">
+            <div id="sample-page" v-if="page">
+                <header>
+                  <img :src="page.fields.hero_image">
+                </header>
+                <h1>[[ page.fields.headline ]]</h1>
+                <div id="content" v-html="page.fields.body">
+                </div>
+                <div class="action">
+                  <button>[[ page.fields.call_to_action ]]</button>
+                </div>
+                <footer>
+                  <img v-for="logo in page.fields.customer_logos" :src="logo.logo_image">
+                </footer>
+            </div>
+          </div>
+         <script>
+            const butter = Butter('fef6b0175571c4faa36934f8f116dc1ce5e530d3')
+            var app = new Vue({
+              delimiters: ['[[', ']]'],
+              el: '#app',
+              data () {
+                return {
+                  page: null
+                }
+              },
+              created () {
+                this.fetchContent()
+              },
+              methods: {
+                fetchContent: function() {
+                  butter.page.retrieve('*', 'sample-page')
+                  .then((res) => {
+                    console.log(res.data.data)
+                    this.page = res.data.data
+                  }).catch((res) => {
+                    console.log(res)
+                  })
+                }
+              }
+            });
+        </script>
+    </body>
+</html>

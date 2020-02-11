@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>Blog Home</title>
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+				font-family: 'Helvetica';
+			}
+			h2 {
+				padding-bottom: 14px;
+				border-bottom: 1px solid #ddd;
+			}
+			.blog {
+				padding: 10px 80px 10px 80px;
+			}
+			.info {
+				font-style: italic;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="blog">
+			<h2>Posts</h2>
+			<!-- List of posts -->
+			{% for post in recent_posts %}
+			    <a href="{% url 'blog-post' post.slug %}">{{ post.title }}</a>
+			{% endfor %}
+
+			<!-- Pagination links -->
+			<div>
+			  {% if previous_page %}
+			  <a href="{% url 'archive' previous_page %}">Prev</a>
+			  {% endif %}
+
+			  {% if next_page %}
+			  <a href="{% url 'archive' next_page %}">Next</a>
+			  {% endif %}
+			</div>
+		</div>
+	</body>
+</html>

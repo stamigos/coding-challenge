@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>{{ post.seo_title }}</title>
+		<meta name="description" content="{{ post.meta_description }}">
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+				font-family: 'Helvetica';
+			}
+			h2 {
+				padding-bottom: 14px;
+				border-bottom: 1px solid #ddd;
+			}
+			.blog {
+				padding: 10px 80px 10px 80px;
+			}
+			.info {
+				font-style: italic;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="blog">
+			<!-- Post title -->
+			<h2>{{ post.title }}</h2>
+
+			<div class="info">
+				<!-- Post author + Publish date -->
+				Posted by <a>{{ post.author.first_name }} {{ post.author.last_name }}</a> on {{ post.published }}
+
+				<!-- Post categories -->
+				{% for category in post.categories %}
+				<a>{{ category.name }}</a>
+				{% endfor %}
+			</div>
+			<div class="content">
+				<!-- Post body -->
+				{{ post.body|safe }}
+			</div>
+		</div>
+	</body>
+</html>
